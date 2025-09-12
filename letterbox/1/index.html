@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Letter</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;background:#f7f7f8;margin:0}
+    .wrap{background:#fff;padding:2rem;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08);width:min(720px,92vw)}
+    a{color:#111;text-decoration:none}
+    .btn{display:inline-block;margin-top:1rem;padding:.6rem 1rem;border-radius:10px;background:#111;color:#fff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 id="title">Letter</h1>
+    <p id="body">Loading…</p>
+    <a class="btn" href="/letterbox.html">Back to Letterbox</a>
+  </div>
+
+  <script src="/assets/auth.js"></script>
+  <script>
+    (async () => {
+      await requireSessionOrRedirect();
+
+      // Determine ID from the URL path: /letterbox/<id>/
+      const parts = window.location.pathname.split("/").filter(Boolean);
+      const id = parts[1]; // ["letterbox","1"] -> "1"
+
+      try {
+        const data = await apiFetch(`/api/letters/${id}`);
+        document.getElementById("title").textContent = data.title;
+        document.getElementById("body").textContent = data.body;
+      } catch (err) {
+        document.getElementById("body").textContent = "Unable to load this letter.";
+      }
+    })();
+  </script>
+</body>
+<script src="../../assets/auth.js"></script>
+<script>
+  (async () => {
+    await window.requireSessionOrRedirect();
+
+    const segments = window.location.pathname.split("/").filter(Boolean);
+    const id = segments[segments.length - 1]; // works for /repo/letterbox/1/
+
+    try {
+      const data = await window.apiFetch(`/api/letters/${id}`);
+      document.getElementById("title").textContent = data.title;
+      document.getElementById("body").textContent = data.body;
+    } catch (err) {
+      document.getElementById("body").textContent = "Unable to load this letter.";
+    }
+  })();
+</script>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Login</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;background:#f7f7f8;margin:0}
+    .card{background:#fff;padding:2rem;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.06);width:min(420px,90vw)}
+    h1{margin:0 0 1rem}
+    label{display:block;margin:.75rem 0 .25rem}
+    input{width:100%;padding:.75rem;border:1px solid #ddd;border-radius:10px}
+    button{margin-top:1rem;padding:.75rem 1rem;border:0;border-radius:10px;background:#111;color:#fff;cursor:pointer}
+    .err{color:#c00;margin-top:.75rem}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" required />
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required />
+      <button type="submit">Sign in</button>
+      <div id="error" class="err"></div>
+    </form>
+  </div>
+
+  <script src="/assets/auth.js"></script>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const errorEl = document.getElementById("error");
+      errorEl.textContent = "";
+
+      try {
+        await apiFetch("/api/login", {
+          method: "POST",
+          body: JSON.stringify({ username, password })
+        });
+        window.location.href = "/letterbox.html";
+      } catch (err) {
+        errorEl.textContent = err.message || "Login failed";
+      }
+    });
+  </script>
+</body>
+<script src="assets/auth.js"></script>
+</html>
