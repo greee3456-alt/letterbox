@@ -25,7 +25,7 @@ window.requireSessionOrRedirect = async function () {
     return data.user;
   } catch (e) {
     // Not logged in → go to login
-    window.location.href = "/login.html";
+    window.location.href = "login.html";
     throw e;
   }
 };
@@ -34,6 +34,6 @@ window.handleLogout = async function () {
   try {
     await window.apiFetch("/api/logout", { method: "POST" });
   } finally {
-    window.location.href = "/login.html";
+    window.location.href = "login.html";
   }
 };

@@ -38,7 +38,7 @@
         const card = document.createElement("div");
         card.className = "card";
         // Folder structure with index.html gives clean URLs: /letterbox/1/
-        card.innerHTML = `<a href="/letterbox/${id}/">Open letter #${id}</a>`;
+        card.innerHTML = `<a href="letterbox/${id}/">Open letter #${id}</a>`;
         grid.appendChild(card);
       });
       document.getElementById("logoutBtn").addEventListener("click", handleLogout);

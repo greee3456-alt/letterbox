@@ -41,7 +41,7 @@
           method: "POST",
           body: JSON.stringify({ username, password })
         });
-        window.location.href = "/letterbox.html";
+        window.location.href = "letterbox.html";
       } catch (err) {
         errorEl.textContent = err.message || "Login failed";
       }
