@@ -1,6 +1,6 @@
 // assets/auth.js  (pure JS file — no <script> tags)
 
-window.API_BASE = "https://letterbox-backend.onrender.com"; // ← change to your Render URL
+window.API_BASE = "https://letterbox-backend-ammp.onrender.com";
 
 window.apiFetch = async function (path, options = {}) {
   const res = await fetch(`${window.API_BASE}${path}`, {
