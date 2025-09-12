@@ -18,7 +18,7 @@
     <h1>Letterbox 📬</h1>
     <div>
       <span id="welcome"></span>
-      &nbsp;&nbsp;<button class="btn" id="logoutBtn">Logout</button>
+      &nbsp;&nbsp;<button class="btn" onclick="handleLogout()">Logout</button>
     </div>
   </header>
 
@@ -26,24 +26,29 @@
     <div>Loading…</div>
   </main>
 
-  <script src="/assets/auth.js"></script>
+  <!-- IMPORTANT: use relative path (project sites) -->
+  <script src="assets/auth.js"></script>
   <script>
     (async () => {
       const user = await requireSessionOrRedirect();
       document.getElementById("welcome").textContent = `Welcome, ${user.name}`;
+
       const grid = document.getElementById("lettersGrid");
-      const data = await apiFetch("/api/letters");
-      grid.innerHTML = "";
-      data.letters.forEach(id => {
-        const card = document.createElement("div");
-        card.className = "card";
-        // Folder structure with index.html gives clean URLs: /letterbox/1/
-        card.innerHTML = `<a href="letterbox/${id}/">Open letter #${id}</a>`;
-        grid.appendChild(card);
-      });
-      document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+      try {
+        const data = await apiFetch("/api/letters");
+        grid.innerHTML = "";
+        (data.letters || []).forEach(id => {
+          const card = document.createElement("div");
+          card.className = "card";
+          // relative link works on GH Pages project sites
+          card.innerHTML = `<a href="letterbox/${id}/">Open letter #${id}</a>`;
+          grid.appendChild(card);
+        });
+        if (!grid.children.length) grid.innerHTML = "<div>No letters yet.</div>";
+      } catch (err) {
+        grid.innerHTML = `<div style="color:#c00;">Couldn't load letters: ${err.message}</div>`;
+      }
     })();
   </script>
 </body>
-<script src="assets/auth.js"></script>
 </html>

@@ -18,14 +18,15 @@
     <a class="btn" href="../../letterbox.html">Back to Letterbox</a>
   </div>
 
-  <script src="/assets/auth.js"></script>
+  <!-- LOAD ONCE with correct relative path -->
+  <script src="../../assets/auth.js"></script>
   <script>
     (async () => {
       await requireSessionOrRedirect();
 
-      // Determine ID from the URL path: /letterbox/<id>/
-      const parts = window.location.pathname.split("/").filter(Boolean);
-      const id = parts[1]; // ["letterbox","1"] -> "1"
+      // Works whether your site is user root or project site
+      const segments = window.location.pathname.split("/").filter(Boolean);
+      const id = segments[segments.length - 1]; // .../letterbox/1/
 
       try {
         const data = await apiFetch(`/api/letters/${id}`);
@@ -37,21 +38,4 @@
     })();
   </script>
 </body>
-<script src="../../assets/auth.js"></script>
-<script>
-  (async () => {
-    await window.requireSessionOrRedirect();
-
-    const segments = window.location.pathname.split("/").filter(Boolean);
-    const id = segments[segments.length - 1]; // works for /repo/letterbox/1/
-
-    try {
-      const data = await window.apiFetch(`/api/letters/${id}`);
-      document.getElementById("title").textContent = data.title;
-      document.getElementById("body").textContent = data.body;
-    } catch (err) {
-      document.getElementById("body").textContent = "Unable to load this letter.";
-    }
-  })();
-</script>
 </html>

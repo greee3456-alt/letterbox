@@ -1,10 +1,9 @@
-// assets/auth.js  (pure JS file — no <script> tags)
-
+// assets/auth.js
 window.API_BASE = "https://letterbox-backend-ammp.onrender.com";
 
 window.apiFetch = async function (path, options = {}) {
   const res = await fetch(`${window.API_BASE}${path}`, {
-    credentials: "include", // send/receive cookie
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...(options.headers || {}) },
     ...options,
   });
@@ -24,8 +23,7 @@ window.requireSessionOrRedirect = async function () {
     const data = await window.apiFetch("/api/session");
     return data.user;
   } catch (e) {
-    // Not logged in → go to login
-    window.location.href = "login.html";
+    window.location.href = "login.html"; // relative
     throw e;
   }
 };
@@ -34,6 +32,6 @@ window.handleLogout = async function () {
   try {
     await window.apiFetch("/api/logout", { method: "POST" });
   } finally {
-    window.location.href = "login.html";
+    window.location.href = "login.html"; // relative
   }
 };
