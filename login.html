@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <title>Login</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <!-- your separated CSS -->
   <link rel="stylesheet" href="css/login.css" />
 </head>
 <body>
@@ -42,7 +43,7 @@
 
   <script src="assets/auth.js"></script>
   <script>
-    // submit
+    // submit: after login, api returns { token }, which auth.js stores for Safari
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const username = document.getElementById("username").value.trim();
@@ -50,7 +51,11 @@
       const errorEl = document.getElementById("error");
       errorEl.textContent = "";
       try {
-        await apiFetch("/api/login", { method: "POST", body: JSON.stringify({ username, password }) });
+        // apiFetch auto-saves token if present
+        await apiFetch("/api/login", {
+          method: "POST",
+          body: JSON.stringify({ username, password })
+        });
         window.location.href = "letterbox.html";
       } catch (err) {
         errorEl.textContent = err.message || "Login failed";
