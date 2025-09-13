@@ -9,14 +9,19 @@
 <body>
   <header>
     <h1>Your letterbox 📬</h1>
-    <div>
-      <span id="welcome"></span>
-      &nbsp;&nbsp;<button class="btn" onclick="handleLogout()">Logout</button>
+    <div class="header-links">
+      <a href="form.html" class="btn-link">Girlfriend Support Form</a>
+      <button class="btn" onclick="handleLogout()">Logout</button>
     </div>
   </header>
 
-  <main class="grid" id="lettersGrid">
-    <div>Loading...</div>
+  <main>
+    <!-- greeting now centered above the grid -->
+    <div id="welcome" class="welcome"></div>
+
+    <section class="grid" id="lettersGrid">
+      <div>Loading...</div>
+    </section>
   </main>
 
   <script src="./assets/auth.js"></script>
@@ -34,11 +39,12 @@
     (async () => {
       try {
         const user = await requireSessionOrRedirect();
+        // greeting now goes to middle of page
         document.getElementById("welcome").textContent = `Ola, ${user.name}`;
 
         const grid = document.getElementById("lettersGrid");
         try {
-          const data = await apiFetch("/api/letters"); // { letters: [1,2,3...] }
+          const data = await apiFetch("/api/letters");
           const opened = getOpenedSet(user);
 
           grid.innerHTML = "";

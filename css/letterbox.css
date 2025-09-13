@@ -27,9 +27,34 @@ a.btn, button.btn {
   font-size: 1rem;
 }
 
+a.btn-link {
+  display: inline-block;
+  margin-right: 1rem;
+  color: #353535;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a.btn-link:hover {
+  text-decoration: underline;
+}
+
+.header-links {
+  display: flex;
+  align-items: center;
+}
+
+.welcome {
+  text-align: center;
+  font-size: 1.25rem;
+  margin: 1.5rem 0;
+  font-weight: 600;
+  color: #333;
+}
+
 .grid {
   max-width: 960px;
-  margin: 2rem auto;
+  margin: 0 auto 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
