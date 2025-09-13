@@ -4,6 +4,7 @@ body {
   margin: 0;
 }
 
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -13,6 +14,7 @@ header {
   box-shadow: 0 1px 8px rgba(0,0,0,.06);
   position: sticky;
   top: 0;
+  z-index: 10;
 }
 
 a.btn, button.btn {
@@ -35,15 +37,14 @@ a.btn-link {
   font-weight: 500;
 }
 
-a.btn-link:hover {
-  text-decoration: underline;
-}
+a.btn-link:hover { text-decoration: underline; }
 
 .header-links {
   display: flex;
   align-items: center;
 }
 
+/* Greeting */
 .welcome {
   text-align: center;
   font-size: 1.25rem;
@@ -52,6 +53,7 @@ a.btn-link:hover {
   color: #333;
 }
 
+/* Letters grid */
 .grid {
   max-width: 960px;
   margin: 0 auto 2rem;
@@ -59,7 +61,7 @@ a.btn-link:hover {
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
   padding: 0 1rem;
-  background-color: #ffffff00;
+  background-color: transparent;
 }
 
 .card {
@@ -70,12 +72,12 @@ a.btn-link:hover {
 
 .card.unopened {
   background: #ffffff;
-  border: 2px solid #3b82f6; /* blue border */
+  border: 2px solid #3b82f6;
 }
 
 .card.opened {
   background: #f3f4f6;
-  border: 2px solid #e5e7eb; /* light gray */
+  border: 2px solid #e5e7eb;
 }
 
 .label {
@@ -86,15 +88,8 @@ a.btn-link:hover {
   margin-bottom: .5rem;
 }
 
-.label.unopened {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-.label.opened {
-  background: #e5e7eb;
-  color: #374151;
-}
+.label.unopened { background: #dbeafe; color: #1d4ed8; }
+.label.opened   { background: #e5e7eb; color: #374151; }
 
 /* row with icon + title link */
 .item {
@@ -103,7 +98,6 @@ a.btn-link:hover {
   gap: .6rem;
 }
 
-/* icon sizing */
 .icon {
   width: 24px;
   height: 24px;
@@ -111,10 +105,39 @@ a.btn-link:hover {
   flex: 0 0 24px;
 }
 
-/* link styling */
 .title {
   display: inline-block;
   text-decoration: none;
   color: #111;
   margin-top: .25rem;
+}
+
+/* ---------- Responsive tweaks for phones ---------- */
+@media (max-width: 640px) {
+  header {
+    flex-direction: column;           /* stack title + actions */
+    align-items: flex-start;
+    gap: .5rem;
+  }
+
+  .header-links {
+    width: 100%;
+    justify-content: space-between;   /* put link left, logout right */
+  }
+
+  /* tighter spacing + single-column cards on very small screens */
+  .grid {
+    grid-template-columns: 1fr;
+    gap: .75rem;
+    padding: 0 .75rem 1rem;
+  }
+
+  .card { padding: .9rem; }
+
+  h1 { font-size: 1.4rem; margin: 0; }
+
+  a.btn, button.btn { padding: .5rem .8rem; font-size: .95rem; }
+  a.btn-link { margin-right: 0; font-size: .95rem; }
+
+  .welcome { margin: 1rem 0; font-size: 1.1rem; }
 }
