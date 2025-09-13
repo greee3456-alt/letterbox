@@ -8,8 +8,14 @@
 </head>
 <body>
   <div class="wrap">
-    <h1 id="title">Letter</h1>
-    <p id="body">Loading...</p>
+    <h1 id="title">First letter</h1>
+    <p id="body">
+      Elo my cutie pieeee,<br><br>
+      This is your first digital letter in your letterbox (maybe I will come up with some name for this to not interfere with your movie review account hahah). I&#96;m writing this in the ideation/initial stage of making this thing. I want to make an app basically like an email but personal. Not sure how long it will take as the apps building seems to be very different to what I know. But yeah I&#96;d basically write letters from my phone somehow and make them appear on urs in a separate account which would be yours only. Maybe I&#96;ll add some other features but not 100% sure what exactly.<br><br>
+      I love and miss you a lot and I wanna make things like that with uuuu. Maybe help you make something you want or just sit together and you watching anime and me making something. Thinking of that reminds me of writing essays in uni while you are snuggled up in the bed hahah. And how ud come and give me hugs and kisses.<br><br>
+      Hopefully I&#96;ll finish this thing quickly and it would be cool. The design would for sure not be great but it won&#96;t be hard to change so I&#96;ll be asking for your advice later on 👀.<br><br>
+      I love and miss you my cutie cat ♥️
+    </p>
     <a class="btn" href="../../letterbox.html">Back to Letterbox</a>
   </div>
 
@@ -27,24 +33,16 @@
 
     (async () => {
       try {
+        // Require login, but DO NOT fetch/overwrite the letter
         const user = await requireSessionOrRedirect();
 
-        // determine ID from path (works on project sites)
+        // mark as opened (based on URL)
         const segs = window.location.pathname.split("/").filter(Boolean);
         const id = segs[segs.length - 1];
 
-        try {
-          const data = await apiFetch(`/api/letters/${id}`); // expects { title, body }
-          document.getElementById("title").textContent = data.title || `Letter ${id}`;
-          document.getElementById("body").textContent = data.body || "";
-
-          // mark as opened
-          const opened = getOpenedSet(user);
-          opened.add(String(id));
-          saveOpenedSet(user, opened);
-        } catch (err) {
-          document.getElementById("body").textContent = "Unable to load this letter.";
-        }
+        const opened = getOpenedSet(user);
+        opened.add(String(id));
+        saveOpenedSet(user, opened);
       } catch {
         /* redirected by requireSessionOrRedirect */
       }
