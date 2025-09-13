@@ -4,17 +4,30 @@ body {
   margin: 0;
 }
 
-/* Header */
+/* ---------- Mobile-first header: stacks/wraps by default ---------- */
 header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;                 /* allow wrapping on small screens */
+  align-items: flex-start;
+  gap: .5rem .75rem;
   padding: 1rem 1.25rem;
   background: #fff;
   box-shadow: 0 1px 8px rgba(0,0,0,.06);
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  flex: 0 1 auto;
+}
+
+.header-links {
+  display: flex;
+  align-items: center;
+  width: 100%;                    /* sits under the title on phones */
+  justify-content: space-between; /* link left, logout right */
 }
 
 a.btn, button.btn {
@@ -31,7 +44,6 @@ a.btn, button.btn {
 
 a.btn-link {
   display: inline-block;
-  margin-right: 1rem;
   color: #353535;
   text-decoration: none;
   font-weight: 500;
@@ -39,16 +51,11 @@ a.btn-link {
 
 a.btn-link:hover { text-decoration: underline; }
 
-.header-links {
-  display: flex;
-  align-items: center;
-}
-
 /* Greeting */
 .welcome {
   text-align: center;
   font-size: 1.25rem;
-  margin: 1.5rem 0;
+  margin: 1.25rem 0;
   font-weight: 600;
   color: #333;
 }
@@ -58,10 +65,28 @@ a.btn-link:hover { text-decoration: underline; }
   max-width: 960px;
   margin: 0 auto 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
-  padding: 0 1rem;
+  grid-template-columns: 1fr;        /* single column on phones */
+  gap: .9rem;
+  padding: 0 .9rem;
   background-color: transparent;
+}
+
+@media (min-width: 640px) {
+  /* Desktop/tablet behavior */
+  header {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .header-links {
+    width: auto;                     /* move back to the right */
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    padding: 0 1rem;
+  }
 }
 
 .card {
@@ -70,15 +95,8 @@ a.btn-link:hover { text-decoration: underline; }
   padding: 1rem;
 }
 
-.card.unopened {
-  background: #ffffff;
-  border: 2px solid #3b82f6;
-}
-
-.card.opened {
-  background: #f3f4f6;
-  border: 2px solid #e5e7eb;
-}
+.card.unopened { background: #ffffff; border: 2px solid #3b82f6; }
+.card.opened   { background: #f3f4f6; border: 2px solid #e5e7eb; }
 
 .label {
   display: inline-block;
@@ -87,57 +105,13 @@ a.btn-link:hover { text-decoration: underline; }
   border-radius: 999px;
   margin-bottom: .5rem;
 }
-
 .label.unopened { background: #dbeafe; color: #1d4ed8; }
 .label.opened   { background: #e5e7eb; color: #374151; }
 
 /* row with icon + title link */
-.item {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-}
+.item { display: flex; align-items: center; gap: .6rem; }
+.icon { width: 24px; height: 24px; object-fit: contain; flex: 0 0 24px; }
+.title { display: inline-block; text-decoration: none; color: #111; margin-top: .25rem; }
 
-.icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  flex: 0 0 24px;
-}
-
-.title {
-  display: inline-block;
-  text-decoration: none;
-  color: #111;
-  margin-top: .25rem;
-}
-
-/* ---------- Responsive tweaks for phones ---------- */
-@media (max-width: 640px) {
-  header {
-    flex-direction: column;           /* stack title + actions */
-    align-items: flex-start;
-    gap: .5rem;
-  }
-
-  .header-links {
-    width: 100%;
-    justify-content: space-between;   /* put link left, logout right */
-  }
-
-  /* tighter spacing + single-column cards on very small screens */
-  .grid {
-    grid-template-columns: 1fr;
-    gap: .75rem;
-    padding: 0 .75rem 1rem;
-  }
-
-  .card { padding: .9rem; }
-
-  h1 { font-size: 1.4rem; margin: 0; }
-
-  a.btn, button.btn { padding: .5rem .8rem; font-size: .95rem; }
-  a.btn-link { margin-right: 0; font-size: .95rem; }
-
-  .welcome { margin: 1rem 0; font-size: 1.1rem; }
-}
+/* Safari text autosize guard (prevents unexpected zoom) */
+html { -webkit-text-size-adjust: 100%; }
