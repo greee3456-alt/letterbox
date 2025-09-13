@@ -4,12 +4,7 @@
   <meta charset="utf-8" />
   <title>Letter</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;background:#f7f7f8;margin:0}
-    .wrap{background:#fff;padding:2rem;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08);width:min(720px,92vw)}
-    a{color:#111;text-decoration:none}
-    .btn{display:inline-block;margin-top:1rem;padding:.6rem 1rem;border-radius:10px;background:#111;color:#fff}
-  </style>
+  <link rel="stylesheet" href="../../css/index.css" />
 </head>
 <body>
   <div class="wrap">
@@ -18,21 +13,35 @@
     <a class="btn" href="../../letterbox.html">Back to Letterbox</a>
   </div>
 
-  <!-- Correct relative path from /letterbox/1/ -->
   <script src="../../assets/auth.js"></script>
   <script>
+    // localStorage helpers (per-user)
+    function openedKey(user) { return `openedLetters_${user.name}`; }
+    function getOpenedSet(user) {
+      try { return new Set(JSON.parse(localStorage.getItem(openedKey(user)) || "[]")); }
+      catch { return new Set(); }
+    }
+    function saveOpenedSet(user, set) {
+      localStorage.setItem(openedKey(user), JSON.stringify(Array.from(set)));
+    }
+
     (async () => {
       try {
-        await requireSessionOrRedirect();
+        const user = await requireSessionOrRedirect();
 
-        // Works for project sites: /letterbox/letterbox/1/ -> ["letterbox","1"] or longer
+        // determine ID from path (works on project sites)
         const segs = window.location.pathname.split("/").filter(Boolean);
         const id = segs[segs.length - 1];
 
         try {
-          const data = await apiFetch(`/api/letters/${id}`);
-          document.getElementById("title").textContent = data.title;
-          document.getElementById("body").textContent = data.body;
+          const data = await apiFetch(`/api/letters/${id}`); // expects { title, body }
+          document.getElementById("title").textContent = data.title || `Letter #${id}`;
+          document.getElementById("body").textContent = data.body || "";
+
+          // mark as opened
+          const opened = getOpenedSet(user);
+          opened.add(String(id));
+          saveOpenedSet(user, opened);
         } catch (err) {
           document.getElementById("body").textContent = "Unable to load this letter.";
         }

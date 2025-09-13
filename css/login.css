@@ -1,0 +1,59 @@
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f8;
+  margin: 0;
+}
+
+.card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.06);
+  width: min(420px, 90vw);
+}
+
+h1 {
+  margin: 0 0 1rem;
+}
+
+label {
+  display: block;
+  margin: .75rem 0 .25rem;
+}
+
+input {
+  width: 100%;
+  padding: .75rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+button[type="submit"] {
+  margin-top: 1rem;
+  padding: .75rem 1rem;
+  border: 0;
+  border-radius: 10px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pw-wrap button {
+  position: absolute;
+  right: .5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: .25rem;
+}
+
+.err {
+  color: #c00;
+  margin-top: .75rem;
+}
