@@ -26,8 +26,8 @@ header h1 {
 .header-links {
   display: flex;
   align-items: center;
-  width: 100%;
-  justify-content: space-between;
+  width: 100%;                    /* under the title on phones */
+  justify-content: space-between; /* link left, logout right on mobile bar */
 }
 
 a.btn, button.btn {
@@ -71,6 +71,7 @@ a.btn-link:hover { text-decoration: underline; }
   background-color: transparent;
 }
 
+/* -------- Tablet: put actions beside title but still flexible -------- */
 @media (min-width: 640px) {
   header {
     flex-wrap: nowrap;
@@ -78,7 +79,6 @@ a.btn-link:hover { text-decoration: underline; }
   }
   .header-links {
     width: auto;
-    justify-content: flex-end;
     gap: 1rem;
   }
   .grid {
@@ -88,10 +88,22 @@ a.btn-link:hover { text-decoration: underline; }
   }
 }
 
+/* -------- Desktop: push actions fully to the right -------- */
+@media (min-width: 1024px) {
+  header {
+    justify-content: space-between;   /* title left, actions right */
+  }
+  .header-links {
+    margin-left: auto;                /* ensure it hugs the right edge */
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+}
+
 .card {
   border-radius: 14px;
   box-shadow: 0 10px 30px rgba(0,0,0,.08);
-  padding: 0; /* padding now handled inside .card-link */
+  padding: 0; /* padding handled inside .card-link */
   overflow: hidden;
 }
 
@@ -122,24 +134,9 @@ a.btn-link:hover { text-decoration: underline; }
 }
 
 /* row with icon + title link */
-.item {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  flex: 0 0 24px;
-}
-
-.title {
-  display: inline-block;
-  color: #111;
-  margin-top: .25rem;
-}
+.item { display: flex; align-items: center; gap: .6rem; }
+.icon { width: 24px; height: 24px; object-fit: contain; flex: 0 0 24px; }
+.title { display: inline-block; color: #111; margin-top: .25rem; }
 
 /* Safari text autosize guard */
 html { -webkit-text-size-adjust: 100%; }
