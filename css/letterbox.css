@@ -1,6 +1,6 @@
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
-  background: #eef2ff;
+  background: #ffffff;
   margin: 0;
 }
 
@@ -19,11 +19,12 @@ a.btn, button.btn {
   display: inline-block;
   padding: .5rem 1rem;
   border-radius: 10px;
-  background: #111;
+  background: #353535;
   color: #fff;
   text-decoration: none;
   border: 0;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .grid {
@@ -33,6 +34,7 @@ a.btn, button.btn {
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
   padding: 0 1rem;
+  background-color: #ffeeff;
 }
 
 .card {

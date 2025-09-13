@@ -8,7 +8,7 @@
 </head>
 <body>
   <header>
-    <h1>Letterbox 📬</h1>
+    <h1>Your letterbox 📬</h1>
     <div>
       <span id="welcome"></span>
       &nbsp;&nbsp;<button class="btn" onclick="handleLogout()">Logout</button>
@@ -34,7 +34,7 @@
     (async () => {
       try {
         const user = await requireSessionOrRedirect();
-        document.getElementById("welcome").textContent = `Welcome, ${user.name}`;
+        document.getElementById("welcome").textContent = `Ola, ${user.name}`;
 
         const grid = document.getElementById("lettersGrid");
         try {
