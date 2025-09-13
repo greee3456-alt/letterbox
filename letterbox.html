@@ -23,30 +23,33 @@
   </header>
 
   <main class="grid" id="lettersGrid">
-    <div>Loading…</div>
+    <div>Loading...</div>
   </main>
 
-  <!-- IMPORTANT: use relative path (project sites) -->
-  <script src="assets/auth.js"></script>
+  <!-- Load auth.js FIRST, with a RELATIVE path -->
+  <script src="./assets/auth.js"></script>
   <script>
     (async () => {
-      const user = await requireSessionOrRedirect();
-      document.getElementById("welcome").textContent = `Welcome, ${user.name}`;
-
-      const grid = document.getElementById("lettersGrid");
       try {
-        const data = await apiFetch("/api/letters");
-        grid.innerHTML = "";
-        (data.letters || []).forEach(id => {
-          const card = document.createElement("div");
-          card.className = "card";
-          // relative link works on GH Pages project sites
-          card.innerHTML = `<a href="letterbox/${id}/">Open letter #${id}</a>`;
-          grid.appendChild(card);
-        });
-        if (!grid.children.length) grid.innerHTML = "<div>No letters yet.</div>";
-      } catch (err) {
-        grid.innerHTML = `<div style="color:#c00;">Couldn't load letters: ${err.message}</div>`;
+        const user = await requireSessionOrRedirect();
+        document.getElementById("welcome").textContent = `Welcome, ${user.name}`;
+
+        const grid = document.getElementById("lettersGrid");
+        try {
+          const data = await apiFetch("/api/letters");
+          grid.innerHTML = "";
+          (data.letters || []).forEach(id => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `<a href="letterbox/${id}/">Open letter #${id}</a>`;
+            grid.appendChild(card);
+          });
+          if (!grid.children.length) grid.innerHTML = "<div>No letters yet.</div>";
+        } catch (err) {
+          grid.innerHTML = `<div style="color:#c00;">Couldn't load letters: ${err.message}</div>`;
+        }
+      } catch {
+        /* requireSessionOrRedirect will redirect to login.html */
       }
     })();
   </script>

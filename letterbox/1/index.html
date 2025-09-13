@@ -14,26 +14,30 @@
 <body>
   <div class="wrap">
     <h1 id="title">Letter</h1>
-    <p id="body">Loading…</p>
+    <p id="body">Loading...</p>
     <a class="btn" href="../../letterbox.html">Back to Letterbox</a>
   </div>
 
-  <!-- LOAD ONCE with correct relative path -->
+  <!-- Correct relative path from /letterbox/1/ -->
   <script src="../../assets/auth.js"></script>
   <script>
     (async () => {
-      await requireSessionOrRedirect();
-
-      // Works whether your site is user root or project site
-      const segments = window.location.pathname.split("/").filter(Boolean);
-      const id = segments[segments.length - 1]; // .../letterbox/1/
-
       try {
-        const data = await apiFetch(`/api/letters/${id}`);
-        document.getElementById("title").textContent = data.title;
-        document.getElementById("body").textContent = data.body;
-      } catch (err) {
-        document.getElementById("body").textContent = "Unable to load this letter.";
+        await requireSessionOrRedirect();
+
+        // Works for project sites: /letterbox/letterbox/1/ -> ["letterbox","1"] or longer
+        const segs = window.location.pathname.split("/").filter(Boolean);
+        const id = segs[segs.length - 1];
+
+        try {
+          const data = await apiFetch(`/api/letters/${id}`);
+          document.getElementById("title").textContent = data.title;
+          document.getElementById("body").textContent = data.body;
+        } catch (err) {
+          document.getElementById("body").textContent = "Unable to load this letter.";
+        }
+      } catch {
+        /* redirected by requireSessionOrRedirect */
       }
     })();
   </script>
