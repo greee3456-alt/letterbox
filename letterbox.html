@@ -38,7 +38,7 @@
 
         const grid = document.getElementById("lettersGrid");
         try {
-          const data = await apiFetch("/api/letters"); // expects { letters: [1,2,3...] }
+          const data = await apiFetch("/api/letters"); // { letters: [1,2,3...] }
           const opened = getOpenedSet(user);
 
           grid.innerHTML = "";
@@ -51,7 +51,10 @@
             card.className = `card ${stateCls}`;
             card.innerHTML = `
               <span class="label ${stateCls}">${stateTxt}</span>
-              <a href="letterbox/${id}/">Open letter #${id}</a>
+              <div class="item">
+                <img class="icon" src="assets/letter.png" alt="Letter icon" />
+                <a class="title" href="letterbox/${id}/">Letter #${id}</a>
+              </div>
             `;
             grid.appendChild(card);
           });

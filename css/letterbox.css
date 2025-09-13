@@ -1,6 +1,6 @@
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
-  background: #ffffff;
+  background: #ffeeff;
   margin: 0;
 }
 
@@ -34,7 +34,7 @@ a.btn, button.btn {
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
   padding: 0 1rem;
-  background-color: #ffeeff;
+  background-color: #ffffff00;
 }
 
 .card {
@@ -71,8 +71,24 @@ a.btn, button.btn {
   color: #374151;
 }
 
-.card a {
-  display: block;
+/* row with icon + title link */
+.item {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+/* icon sizing */
+.icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  flex: 0 0 24px;
+}
+
+/* link styling */
+.title {
+  display: inline-block;
   text-decoration: none;
   color: #111;
   margin-top: .25rem;
