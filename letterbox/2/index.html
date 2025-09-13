@@ -35,7 +35,7 @@
 
         try {
           const data = await apiFetch(`/api/letters/${id}`); // expects { title, body }
-          document.getElementById("title").textContent = data.title || `Letter #${id}`;
+          document.getElementById("title").textContent = data.title || `Letter ${id}`;
           document.getElementById("body").textContent = data.body || "";
 
           // mark as opened
