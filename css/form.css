@@ -16,6 +16,10 @@ body {
   width: min(720px, 92vw);
 }
 
+img {
+  height: 30rem;
+}
+
 a {
   color: #111;
   text-decoration: none;
