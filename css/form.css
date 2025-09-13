@@ -1,3 +1,4 @@
+/* Base layout */
 body {
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, sans-serif;
   display: flex;
@@ -6,7 +7,7 @@ body {
   justify-content: center;
   background: #ffeeff;
   margin: 0;
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; /* iOS Safari */
 }
 
 .wrap {
@@ -16,43 +17,56 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,.08);
   width: min(720px, 92vw);
   box-sizing: border-box;
-  text-align: center; /* center everything inside */
+  text-align: center;
 }
 
 h1 { margin: 0 0 .75rem; }
-p { margin: 0 0 1rem; }
+p  { margin: 0 0 1rem; }
 
+/* Responsive image */
 .hero {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 60vh;
-  object-fit: cover;
+  height: auto;          /* preserve aspect ratio */
+  max-height: 60vh;      /* never overflow vertical space */
+  object-fit: cover;     /* crop nicely if taller */
   border-radius: 12px;
   margin: 0 0 1rem;
 }
 
-/* button */
+/* Button */
 .btn {
-  display: inline-block;        /* shrink to fit text */
+  appearance: none;           /* normalize across Safari */
+  -webkit-appearance: none;
+  display: inline-block;      /* desktop: shrink to fit */
   padding: .6rem 1.5rem;
   border-radius: 10px;
   background: #111;
   color: #fff;
   font-size: 1rem;
-  margin-top: .5rem;
+  line-height: 1.2;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  transition: background .15s ease;
 }
 
-.btn:hover {
-  background: #333;
-}
+.btn:hover { background: #333; }
 
-/* small screen adjustments */
+/* Small-screen tweaks (iOS Safari friendly) */
 @media (max-width: 480px) {
-  .wrap { padding: 1rem; }
+  .wrap {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
   h1 { font-size: 1.4rem; }
+
+  /* IMPORTANT: block + full width + auto margins for Safari */
   .btn {
-    width: 100%;                /* full width but inside padding */
+    display: block;
+    width: 100%;
     box-sizing: border-box;
+    margin: .5rem 0 0 0;  /* centered because it's block and full width */
   }
 }
