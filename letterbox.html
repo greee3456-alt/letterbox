@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <title>Letterbox</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="css/letterbox.css?v=6" />
+  <link rel="stylesheet" href="css/letterbox.css?v=7" />
 </head>
 <body>
   <header>
@@ -19,13 +19,11 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-BECS5630YX');
     </script>
   </header>
 
   <main>
-    <!-- greeting now centered above the grid -->
     <div id="welcome" class="welcome"></div>
 
     <section class="grid" id="lettersGrid">
@@ -35,7 +33,6 @@
 
   <script src="./assets/auth.js"></script>
   <script>
-    // localStorage helpers (per-user)
     function openedKey(user) { return `openedLetters_${user.name}`; }
     function getOpenedSet(user) {
       try { return new Set(JSON.parse(localStorage.getItem(openedKey(user)) || "[]")); }
@@ -48,16 +45,18 @@
     (async () => {
       try {
         const user = await requireSessionOrRedirect();
-        // greeting now goes to middle of page
         document.getElementById("welcome").textContent = `Ola, ${user.name}`;
 
         const grid = document.getElementById("lettersGrid");
         try {
-          const data = await apiFetch("/api/letters");
+          const data = await apiFetch("/api/letters"); // now returns [{id, title}, ...]
           const opened = getOpenedSet(user);
 
           grid.innerHTML = "";
-          (data.letters || []).forEach(id => {
+          (data.letters || []).forEach(letter => {
+            const id = typeof letter === "object" ? letter.id : String(letter);
+            const title = typeof letter === "object" ? (letter.title || `Letter ${id}`) : `Letter ${id}`;
+
             const isOpened = opened.has(String(id));
             const stateCls = isOpened ? "opened" : "unopened";
             const stateTxt = isOpened ? "Opened letter" : "Unopened letter";
@@ -69,7 +68,7 @@
                 <span class="label ${stateCls}">${stateTxt}</span>
                 <div class="item">
                   <img class="icon" src="assets/letter.png" alt="Letter icon" />
-                  <span class="title">Letter ${id}</span>
+                  <span class="title">${title}</span>
                 </div>
               </a>
             `;
