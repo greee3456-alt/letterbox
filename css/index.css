@@ -26,6 +26,11 @@ a {
   margin-top: 1rem;
   padding: .6rem 1rem;
   border-radius: 10px;
-  background: #111;
+  background: #353535;
   color: #fff;
+}
+
+.link {
+  color: #000000;
+  text-decoration: underline;
 }
