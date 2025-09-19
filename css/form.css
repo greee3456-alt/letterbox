@@ -101,7 +101,7 @@ p  { margin: 0 0 1rem; }
 .status {
   margin: .8rem 0 0;
   min-height: 1.2em; /* reserve space so layout doesn’t jump */
-  color: #333;
+  color: #e8dee8;
 }
 
 /* Secondary button style for the backlink */
