@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Letter</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="../../css/index.css" />
+</head>
+<body>
+  <div class="wrap">
+    <h1 id="title">I miss you</h1>
+    <p id="body">
+      I miss you boba,<br><br>
+      It feels like the days are heavier without your presence in them. I feel like a part of me is missing. The world is a darker and even with the heater on it still feels extra cold without you. I think about you 24/7 and I keep looking at my phone hoping that I&#39;d see a message from you. 
+    </p>
+    <a class="btn" href="../../letterbox.html">Back to letterbox</a>
+  </div>
+
+  <script src="../../assets/auth.js"></script>
+  <script>
+    // localStorage helpers (per-user)
+    function openedKey(user) { return `openedLetters_${user.name}`; }
+    function getOpenedSet(user) {
+      try { return new Set(JSON.parse(localStorage.getItem(openedKey(user)) || "[]")); }
+      catch { return new Set(); }
+    }
+    function saveOpenedSet(user, set) {
+      localStorage.setItem(openedKey(user), JSON.stringify(Array.from(set)));
+    }
+
+    (async () => {
+      try {
+        // Require login, but DO NOT fetch/overwrite the letter
+        const user = await requireSessionOrRedirect();
+
+        // mark as opened (based on URL)
+        const segs = window.location.pathname.split("/").filter(Boolean);
+        const id = segs[segs.length - 1];
+
+        const opened = getOpenedSet(user);
+        opened.add(String(id));
+        saveOpenedSet(user, opened);
+      } catch {
+        /* redirected by requireSessionOrRedirect */
+      }
+    })();
+  </script>
+</body>
+</html>
