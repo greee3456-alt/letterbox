@@ -34,3 +34,14 @@ a {
   color: #000000;
   text-decoration: underline;
 }
+
+/* Responsive image */
+.hero {
+  display: block;
+  width: 100%;
+  height: auto;          /* preserve aspect ratio */
+  max-height: 60vh;      /* never overflow vertical space */
+  object-fit: cover;     /* crop nicely if taller */
+  border-radius: 12px;
+  margin: 0 0 1rem;
+}

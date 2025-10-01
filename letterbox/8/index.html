@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Letter</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="../../css/index.css" />
+</head>
+<body>
+  <div class="wrap">
+    <h1 id="title">Happy mensiversary!</h1>
+    <p id="body">
+      Hello my loveeeeee,<br><br>
+      Happy mensiversary. I&#39;m sorry that it&#39;s happening under these circumstances and I will do everything I can so that no other mensiversary or any day in your life would be spent upset with me.<br><br>
+      I love you a lot and miss you every day. I wish that I could spend every second looking at you and speaking to you. You make me the happiest person in the whole world and without your presence in my life I feel like the best parts of it are missing.<br><br>
+      I love you ♥️ 
+    </p>
+    <a class="btn" href="../../letterbox.html">Back to letterbox</a>
+  </div>
+
+  <script src="../../assets/auth.js"></script>
+  <script>
+    // localStorage helpers (per-user)
+    function openedKey(user) { return `openedLetters_${user.name}`; }
+    function getOpenedSet(user) {
+      try { return new Set(JSON.parse(localStorage.getItem(openedKey(user)) || "[]")); }
+      catch { return new Set(); }
+    }
+    function saveOpenedSet(user, set) {
+      localStorage.setItem(openedKey(user), JSON.stringify(Array.from(set)));
+    }
+
+    (async () => {
+      try {
+        // Require login, but DO NOT fetch/overwrite the letter
+        const user = await requireSessionOrRedirect();
+
+        // mark as opened (based on URL)
+        const segs = window.location.pathname.split("/").filter(Boolean);
+        const id = segs[segs.length - 1];
+
+        const opened = getOpenedSet(user);
+        opened.add(String(id));
+        saveOpenedSet(user, opened);
+      } catch {
+        /* redirected by requireSessionOrRedirect */
+      }
+    })();
+  </script>
+</body>
+</html>
